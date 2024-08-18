@@ -7,8 +7,8 @@ import (
 )
 
 type MenuOption struct {
-	Log *slog.Logger
-	//Cfg       *config.Config
+	Log       *slog.Logger
+	Cfg       any
 	MenuStart func(opt MenuOption)
 }
 
