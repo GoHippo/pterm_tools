@@ -24,3 +24,5 @@ func (p *ProgressBar) Add(i int) {
 func (p *ProgressBar) Close() {
 	p.pb.Stop()
 }
+
+// keka
