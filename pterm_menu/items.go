@@ -45,8 +45,8 @@ func MenuItemBuild(menuItems []MenuItem) []string {
 
 func PrintMenuNubmer(menuItems []MenuItem) int {
 
-	for _, i := range MenuItemBuild(menuItems) {
-		pterm.DefaultBasicText.Println(i)
+	for i, text := range MenuItemBuild(menuItems) {
+		pterm.DefaultBasicText.Println(fmt.Sprintf("[%v] ", i) + text)
 	}
 	fmt.Print("Menu number: ")
 
