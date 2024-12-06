@@ -3,6 +3,9 @@ package pterm_menu
 import (
 	"fmt"
 	"github.com/pterm/pterm"
+	"golang.org/x/term"
+	"os"
+	"strconv"
 	"strings"
 )
 
@@ -38,4 +41,44 @@ func MenuItemBuild(menuItems []MenuItem) []string {
 		options[i] = fmt.Sprintf("%s%s%s", item.Description, padding, item.Value)
 	}
 	return options
+}
+
+func PrintMenuNubmer(menuItems []MenuItem) int {
+
+	for _, i := range MenuItemBuild(menuItems) {
+		pterm.DefaultBasicText.Println(i)
+	}
+	fmt.Print("Menu number: ")
+
+	max_menu_item := len(menuItems)
+	for {
+		// Переводим терминал в сырой режим
+		oldState, err := term.MakeRaw(int(os.Stdin.Fd()))
+		if err != nil {
+			continue
+		}
+		defer term.Restore(int(os.Stdin.Fd()), oldState) // Возврат терминала в обычный режим
+
+		// Считываем один символ
+		var buf = make([]byte, 1)
+		_, err = os.Stdin.Read(buf)
+		if err != nil {
+			continue
+		}
+
+		// Проверяем, что это цифра
+		if buf[0] >= '0' && buf[0] <= '9' {
+			s := string(buf[0])
+			num, _ := strconv.Atoi(s)
+
+			if num > max_menu_item || num < 0 {
+				continue
+			}
+
+			return num
+		} else {
+			continue
+		}
+	}
+
 }
