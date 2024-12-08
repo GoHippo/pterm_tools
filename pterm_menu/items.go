@@ -71,7 +71,7 @@ func PrintMenuNubmer(menuItems []MenuItem) int {
 			s := string(buf[0])
 			num, _ := strconv.Atoi(s)
 
-			if num > max_menu_item || num < 0 {
+			if num >= max_menu_item || num < 0 {
 				continue
 			}
 
