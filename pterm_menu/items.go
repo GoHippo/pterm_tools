@@ -53,9 +53,12 @@ func PrintMenuNubmer(menuItems []MenuItem, mode_without_enter bool) int {
 
 	if !mode_without_enter {
 		for {
-			result, _ := pterm.DefaultInteractiveTextInput.Show(title)
-			s := result[len(result)-1]
-			
+
+			var input string
+			fmt.Scan(&input) // Считывает до первого пробела
+
+			s := input[len(input)-1]
+
 			num, err := strconv.Atoi(string(s))
 			if err != nil {
 				continue
