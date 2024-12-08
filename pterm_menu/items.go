@@ -43,14 +43,33 @@ func MenuItemBuild(menuItems []MenuItem) []string {
 	return options
 }
 
-func PrintMenuNubmer(menuItems []MenuItem) int {
+func PrintMenuNubmer(menuItems []MenuItem, mode_without_enter bool) int {
 
 	for i, text := range MenuItemBuild(menuItems) {
 		pterm.DefaultBasicText.Println(fmt.Sprintf("[%v] ", i) + text)
 	}
-	fmt.Print("Menu number: ")
-
 	max_menu_item := len(menuItems)
+	title := "Menu number: "
+
+	if !mode_without_enter {
+		for {
+			result, _ := pterm.DefaultInteractiveTextInput.Show(title)
+			s := result[len(result)-1]
+			
+			num, err := strconv.Atoi(string(s))
+			if err != nil {
+				continue
+			}
+
+			if num >= max_menu_item || num < 0 {
+				continue
+			}
+			return num
+		}
+	}
+
+	fmt.Print(title)
+
 	for {
 		// Переводим терминал в сырой режим
 		oldState, err := term.MakeRaw(int(os.Stdin.Fd()))
@@ -75,6 +94,7 @@ func PrintMenuNubmer(menuItems []MenuItem) int {
 				continue
 			}
 
+			fmt.Println("")
 			return num
 		} else {
 			continue

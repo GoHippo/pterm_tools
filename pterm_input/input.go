@@ -42,6 +42,8 @@ func InputUserString(title string) (string, error) {
 }
 
 func InpuntUserInt(title string) (int, error) {
+	pterm.DefaultBasicText.Println("\033[H\033[J")
+
 	result, _ := pterm.DefaultInteractiveTextInput.Show(title)
 	i, err := strconv.Atoi(result)
 	if err != nil {
