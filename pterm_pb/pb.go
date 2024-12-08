@@ -21,6 +21,10 @@ func (p *ProgressBar) Add(i int) {
 	p.pb.Add(i)
 }
 
+func (p *ProgressBar) IsNil() bool {
+	return p.pb == nil
+}
+
 func (p *ProgressBar) Close() {
 	p.pb.Stop()
 }
