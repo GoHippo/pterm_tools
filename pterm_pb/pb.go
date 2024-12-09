@@ -26,6 +26,7 @@ func (p *ProgressBar) IsNil() bool {
 }
 
 func (p *ProgressBar) Close() {
+	p.Add(p.pb.Total - p.pb.Current)
 	p.pb.Stop()
 }
 
